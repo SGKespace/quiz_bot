@@ -1,6 +1,5 @@
 import os
 import re
-from pathlib import Path
 
 def fetch_questions(quiz_questions_dir):
     questions = []
@@ -27,7 +26,7 @@ def fetch_questions(quiz_questions_dir):
 def main():
     quiz_questions_dir = './quiz-questions'
     questions = fetch_questions(quiz_questions_dir)
-    # print(questions)
+
 
 if __name__ == '__main__':
     main()
