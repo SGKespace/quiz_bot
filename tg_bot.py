@@ -123,13 +123,8 @@ def main() -> None:
     chat_id = os.getenv('TG_CHAT_ID')
     api_tg_token = os.getenv("TELEGRAM_TOKEN")
     questions_dir = os.getenv('QUESTIONS_DIR')
-
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - '
-                               '%(message)s', datefmt='%d-%m-%Y %I:%M:%S %p',
-                        level=logging.INFO)
-
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%d-%m-%Y %I:%M:%S %p', level=logging.INFO)
     quiz_questions = fetch_questions(questions_dir)
-
     exception_logger.setLevel(logging.ERROR)
     exception_logger.addHandler(TelegramLogsHandler(api_tg_token, chat_id))
 
