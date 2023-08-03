@@ -39,6 +39,8 @@ python tg_bot.py
 python vk_bot.py
 ```
 
+###База данных   Redislabs (https://redislabs.com/)   работает только через VPN
+
 Для работы ботов нужны воппросы и ответы, [вы можете воспользоваться этими](https://dvmn.org/media/modules_dist/quiz-questions.zip)
 
 ## Отказ от ответственности
