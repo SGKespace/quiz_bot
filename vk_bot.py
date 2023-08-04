@@ -34,10 +34,10 @@ def check_answer(event, vk_api, keyboard, redis_client):
     answer = json.loads(redis_client.get(f'{user_id}_question'))[1]
     lower_answer = answer.lower()
     if event.text.lower() == lower_answer:
-        try:
-            total_score = json.loads(redis_client.get(f'{user_id}_score'))
-        except TypeError:
-            total_score = 0
+        total_score = 0
+        get_score = redis_client.get(f'{chat_id}_score')
+        if not get_score:
+            total_score = json.loads(get_score)
         redis_client.set(f'{user_id}_score', total_score + 1)
         bot_answer = 'Вы дали верный ответ. Выберите действие из меню'
     else:
@@ -103,6 +103,7 @@ def main() -> None:
                         handle_user_input(event, vk_api, redis_client, quiz_questions)
             except Exception:
                 exception_logger.exception("Ошибка ВК-bot")
+
 
 if __name__ == "__main__":
     main()

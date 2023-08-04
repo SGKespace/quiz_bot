@@ -66,10 +66,13 @@ def check_answer(update: Update, context: CallbackContext, redis_client):
     lower_answer = answer.lower()
     if user_answer == lower_answer:
         context.user_data["score"] += 1
-        try:
-            total_score = json.loads(redis_client.get(f'{chat_id}_score'))
-        except TypeError:
-            total_score = 0
+
+        total_score = 0
+        get_score = redis_client.get(f'{chat_id}_score')
+        if not get_score:
+            total_score = json.loads(get_score)
+
+
         redis_client.set(f'{chat_id}_score', total_score + 1)
         bot_answer = 'Вы дали верный ответ. Выберите действие из меню'
     else:
@@ -99,8 +102,7 @@ def check_score(update: Update, context: CallbackContext, redis_client):
     chat_id = update.effective_message.chat_id
     score = context.user_data["score"]
     total_score = json.loads(redis_client.get(f'{chat_id}_score'))
-    bot_answer = f"Ваш рейтинг текущей игры:  правильных ответов {score}. \n\n" \
-                 f"Ваш общий  рейтинг:  правильных ответов {total_score}."
+    bot_answer = f"""Ваш рейтинг текущей игры: правильных ответов {score}.\n\nВсего правильных ответов {total_score}."""
     message_keyboard = [["Новый вопрос", "Сдаться"],
                         ["Мой счет", 'Выйти  из бота']]
     markup = ReplyKeyboardMarkup(
